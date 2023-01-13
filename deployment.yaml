@@ -1,0 +1,45 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   labels:
+#     app.kubernetes.io/name: django-todo
+#     app.kubernetes.io/managed-by: kubectl
+#   name: django-todo
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: django-todo
+#   template:
+#     metadata:
+#       labels:
+#         app: django-todo
+#     spec:
+#       containers:
+#         - image: manoj3699/django-todo:latest
+#           imagePullPolicy: Always
+#           name: django-todo
+#           ports:
+#              - containerPort: 8000
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-app
+  labels:
+    app: django
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: django
+  template:
+    metadata:
+      labels:
+        app: django
+    spec:
+      containers:
+        - image: manoj3699/django-todo:latest
+          name: django
+          ports:
+            - containerPort: 8000
+              name: gunicorn
