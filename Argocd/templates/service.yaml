@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "helm-guestbook.fullname" . }}
+  labels:
+    app: {{ template "helm-guestbook.name" . }}
+    chart: {{ template "helm-guestbook.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 8000
+      targetPort: 8000
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "helm-guestbook.name" . }}
+    release: {{ .Release.Name }}
+
+
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: django
+# spec:
+#   type: NodePort
+#   selector:
+#     app: django
+#   ports:
+#     - nodePort: 32200 #external traffic 
+#       port: 8000 #port of this service. Cluster members talk via this port
+#       targetPort: 8000 #where container is actually running
